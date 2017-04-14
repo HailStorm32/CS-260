@@ -9,6 +9,7 @@ Description:
 
 #include <iostream>
 #include "UnOrderedList.h"
+#include "Student.h"
 
 using namespace std;
 
@@ -38,6 +39,8 @@ void main()
 	cout << endl << endl;
 
 	// test on list of chars --------------------------------
+	cout << "\n\n";
+
 	UnOrderedList<char>* charList = new UnOrderedList<char>;
 	charList->append('k');
 	charList->append('s');
@@ -56,7 +59,30 @@ void main()
 	delete charList;
 
 	// test it on Students ------------------------------------
-	// Add code here that tests it on Student objects
-	
+	cout << "\n\n";
+
+	Student child1("Bob", 'F');
+	Student child2("Steve", 'B');
+	Student child3("Lacy", 'A');
+
+	UnOrderedList<Student> studentList;
+
+	studentList.append(child1);
+	studentList.append(child2);
+	studentList.append(child3);
+
+	studentList.print();
+
+	studentList.remove(child1);
+
+	studentList.print();
+
+	studentList.removeAll();
+
+	studentList.print();
+
+	//Allow console to stay open
+	cin.get();
+	cin.ignore();
 
 }

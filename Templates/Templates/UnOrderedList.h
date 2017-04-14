@@ -1,5 +1,5 @@
 /*
-Program: templateTest.cpp
+Program: UnOrderedList.h
 Author: Demetri Van Sickle
 Date: 4/12/17
 IDE: Visual Studio 2015
@@ -24,7 +24,7 @@ public:
 
 	~UnOrderedList()
 	{
-
+		removeAll();
 	}
 
 	bool prepend(T dataToEnter)
@@ -108,7 +108,7 @@ public:
 		}
 	}
 
-	int find(int dataToFind) const
+	int find(T dataToFind) const
 	{	
 		Node* currentNode = NULL;
 		unsigned int itemPos = 1;
@@ -132,7 +132,7 @@ public:
 		return 0;
 	}
 
-	bool remove(int itemToRemove)
+	bool remove(T itemToRemove)
 	{
 		unsigned int indx = 1;
 		unsigned int itemLocation;
