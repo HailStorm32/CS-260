@@ -1,8 +1,18 @@
+/*
+Program: templateTest.cpp
+Author: Demetri Van Sickle
+Date: 4/12/17
+IDE: Visual Studio 2015
+Description:
+	Contains the code for the templated linked list
+*/
+
 #pragma once
 #include <iostream>
 
 using namespace std;
 
+template<class T>
 class UnOrderedList
 {
 public:
@@ -17,7 +27,7 @@ public:
 
 	}
 
-	bool prepend(int dataToEnter)
+	bool prepend(T dataToEnter)
 	{
 		//Make sure item is not already in the list
 		if (find(dataToEnter) > 0)
@@ -55,7 +65,7 @@ public:
 		}
 	}
 
-	bool append(int dataToEnter)
+	bool append(T dataToEnter)
 	{
 		//Make sure item is not already in the list
 		if (find(dataToEnter) > 0)
@@ -220,9 +230,11 @@ public:
 	}
 
 private:
+	
+	//template<typename U>
 	struct Node
 	{
-		int data;
+		T data;
 		Node* nextNodeAddress;
 	};
 
