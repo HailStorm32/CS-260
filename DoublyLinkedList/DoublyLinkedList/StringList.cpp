@@ -24,17 +24,20 @@ StringList::~StringList()
 {
 }
 
-bool StringList::insert(string nameToInsert)
+bool StringList::insert(string dataToInsert)
 {
-	if (nameToInsert.empty() == true)
+	if (dataToInsert.empty() == true)
 	{
 		return false;
 	}
 
 	Node* newNode = new Node;
-	newNode->data = nameToInsert;
+	newNode->data = dataToInsert;
 	newNode->nextAddress = NULL;
 	newNode->prevAddress = NULL;
+
+	Node* currentNode = NULL;
+	Node* prevNode = NULL;
 
 	//If list is empty
 	if (head == NULL)
@@ -45,5 +48,74 @@ bool StringList::insert(string nameToInsert)
 		return true;
 	}
 
-	if()
+	currentNode = head;
+
+	while (currentNode != NULL && insertAfter(dataToInsert, currentNode->data) == true)
+	{
+		prevNode = currentNode;
+		currentNode = currentNode->nextAddress;
+	}
+
+	//Reached the end of the list
+	if (currentNode == NULL)
+	{
+		prevNode->nextAddress = newNode;
+		newNode->prevAddress = prevNode;
+		
+		tail = newNode;
+
+		itemsInList++;
+		return true;
+	}
+	else if (currentNode->prevAddress == NULL)
+	{
+		newNode->nextAddress = head;
+		head->prevAddress = newNode;
+		
+		head = newNode;
+
+		itemsInList++;
+		return true;
+	}
+	else
+	{
+		newNode->nextAddress = currentNode;
+		newNode->prevAddress = currentNode->prevAddress;
+		prevNode->nextAddress = newNode;
+		return true;
+	}
+
+}
+
+bool StringList::insertAfter(const string& dataToInsert, const string& dataInSlot) const
+{
+	unsigned int indx = 0;
+	unsigned int minStringSize = dataToInsert.length();
+
+	if (dataToInsert.length() > dataInSlot.length())
+	{
+		minStringSize = dataInSlot.length();
+	}
+
+	//Keep moving through the two strings until two chars of the same indx != OR we have reached the end of our shortest string
+	while (indx <= minStringSize && tolower(dataToInsert[indx]) == tolower(dataInSlot[indx]))
+	{
+		indx++;
+	}
+
+	//If the two strings are the same (ie: Bird == biRd)
+	if (indx > minStringSize)
+	{
+		//It doesn't matter where we put the string, but return false to put it before
+		return false;
+	}
+
+	if (tolower(dataToInsert[indx]) > tolower(dataInSlot[indx]))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

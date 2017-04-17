@@ -14,5 +14,12 @@ using namespace std;
 
 void main()
 {
+	StringList list1;
+
+	list1.insert("Bob");
+	list1.insert("Apple");
+	list1.insert("Cat");
+	list1.insert("Able");
+	list1.insert("Zoo");
 
 }
