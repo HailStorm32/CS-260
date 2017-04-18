@@ -35,6 +35,12 @@ public:
 	*/
 	int remove(string dataToRemove);
 
+	/*
+	Description:
+		Remove all nodes starting at the tail and working down
+	*/
+	void removeAll();
+
 private:
 	struct Node
 	{
@@ -55,4 +61,12 @@ private:
 		False - put dataToInsert BEFORE the dataInSlot
 	*/
 	bool insertAfter(const string& dataToInsert, const string& dataInSlot) const;
+
+	/*
+	Input:
+		Node pointer
+	Output:
+		int - 1 or 0
+	*/
+	int recursiveRemoveAll(Node* currentNode);
 };

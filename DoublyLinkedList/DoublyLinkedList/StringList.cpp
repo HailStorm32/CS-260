@@ -22,6 +22,7 @@ StringList::StringList()
 
 StringList::~StringList()
 {
+	removeAll();
 }
 
 bool StringList::insert(string dataToInsert)
@@ -179,6 +180,21 @@ int StringList::remove(string dataToRemove)
 	return itemsDeleted;
 }
 
+void StringList::removeAll()
+{
+	if (head == NULL)
+	{
+		return;
+	}
+
+	recursiveRemoveAll(tail);
+
+	head = NULL;
+	tail = NULL;
+
+	itemsInList = 0;
+}
+
 bool StringList::insertAfter(const string& dataToInsert, const string& dataInSlot) const
 {
 	unsigned int indx = 0;
@@ -210,4 +226,19 @@ bool StringList::insertAfter(const string& dataToInsert, const string& dataInSlo
 	{
 		return false;
 	}
+}
+
+int StringList::recursiveRemoveAll(Node* currentNode)
+{
+	if (currentNode == NULL)
+	{
+		return 1;
+	}
+
+	Node* prevNode = currentNode->prevAddress;
+
+	delete currentNode;
+
+	recursiveRemoveAll(prevNode);
+	return 0;
 }
