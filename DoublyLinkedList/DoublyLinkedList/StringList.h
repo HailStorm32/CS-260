@@ -25,7 +25,15 @@ public:
 		True - string inserted into list
 		False - string NOT inserted into the list
 	*/
-	bool insert(string nameToInsert);
+	bool insert(string dataToInsert);
+
+	/*
+	Input:
+		string - no empty string
+	Output:
+		int - number of times given data was removed
+	*/
+	int remove(string dataToRemove);
 
 private:
 	struct Node

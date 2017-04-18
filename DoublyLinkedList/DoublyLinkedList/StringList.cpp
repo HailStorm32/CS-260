@@ -87,6 +87,98 @@ bool StringList::insert(string dataToInsert)
 
 }
 
+int StringList::remove(string dataToRemove)
+{
+	if (dataToRemove.empty() == true || head == NULL)
+	{
+		return 0;
+	}
+
+	Node* currentNode = NULL;
+	Node* nextNode = NULL;
+	Node* prevNode = NULL;
+
+	unsigned int itemsDeleted = 0;
+
+	currentNode = head;
+
+	//Go through the list
+	while (currentNode != NULL)
+	{
+		//If the two peices of data match
+		if (currentNode->data == dataToRemove)
+		{
+			//If deleting the first item in the list
+			if (currentNode->prevAddress == NULL && currentNode->data == dataToRemove)
+			{
+				//and its not the only item
+				if (itemsInList != 1)
+				{
+					nextNode = currentNode->nextAddress;
+					head = currentNode->nextAddress;
+
+					delete currentNode;
+
+					//Reset the prevAddres pointer from the node after the one we deleted
+					nextNode->prevAddress = NULL;
+
+					itemsInList--;
+					itemsDeleted++;
+
+					//Set our currentNode to the "new" head
+					currentNode = head;
+					prevNode = currentNode->prevAddress;
+				}
+				else if(itemsInList == 0)
+				{
+					delete currentNode;
+
+					head = NULL;
+					tail = NULL;
+
+					itemsDeleted++;
+					itemsInList--;
+					return itemsDeleted;
+				}
+			}
+			//If deleting the last item in the list
+			else if (currentNode->nextAddress == NULL)
+			{
+				prevNode->nextAddress = NULL;
+				tail = prevNode;
+
+				delete currentNode;
+				
+				itemsDeleted++;
+				itemsInList--;
+
+				currentNode = NULL;
+
+			}
+			else
+			{
+				nextNode = currentNode->nextAddress;
+				prevNode->nextAddress = nextNode;
+				nextNode->prevAddress = prevNode;
+
+				delete currentNode;
+
+				itemsDeleted++;
+				itemsInList--;
+
+				currentNode = nextNode;
+			}
+		}
+		else
+		{
+			prevNode = currentNode;
+			currentNode = currentNode->nextAddress;
+		}
+	}
+
+	return itemsDeleted;
+}
+
 bool StringList::insertAfter(const string& dataToInsert, const string& dataInSlot) const
 {
 	unsigned int indx = 0;
