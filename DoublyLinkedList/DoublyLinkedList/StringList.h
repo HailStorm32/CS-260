@@ -41,6 +41,26 @@ public:
 	*/
 	void removeAll();
 
+	/*
+	Output:
+		int - number of items in the list
+	*/
+	int totalItems();
+
+	/*
+	Input:
+		true - print list backward
+		false - print list forward
+	*/
+	void print(bool printBackward = false);
+
+	/*
+	Output:
+		int - how many times item shows in the list
+	*/
+	int find(string dataToFind);
+
+
 private:
 	struct Node
 	{
@@ -69,4 +89,28 @@ private:
 		int - 1 or 0
 	*/
 	int recursiveRemoveAll(Node* currentNode);
+
+	/*
+	Input:
+		Node pointer
+	Output:
+		bool
+	*/
+	bool recursivePrintForward(Node* currentNode);
+
+	/*
+	Input:
+		Node pointer
+	Output:
+		bool
+	*/
+	bool recursivePrintBackward(Node* currentNode);
+
+	/*
+	Input:
+		Node pointer
+	Output:
+		int
+	*/
+	int recursiveFind(Node* currentNode, string dataToFind);
 };

@@ -25,9 +25,15 @@ void main()
 	list1.insert("Zoo");
 
 	//list1.remove("Able");
-	//list1.remove("Zoo");
+	list1.remove("Zoo");
+
+	list1.print(false);
+	list1.print(true);
+
+	cout << "\n" << list1.find("Cat") << endl;;
+
 	//list1.remove("Cat");
-	list1.removeAll();
-	while(true){}
+	//list1.removeAll();
+	//while(true){}
 
 }
