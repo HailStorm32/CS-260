@@ -55,10 +55,20 @@ public:
 	void print(bool printBackward = false);
 
 	/*
+	Input:
+		string - no empty string
 	Output:
-		int - how many times item shows in the list
+		int - how many times the item shows in the list
 	*/
 	int find(string dataToFind);
+
+	/*
+	Input:
+		string - no empty string
+	Output:
+		int - how many times the letter shows in the list
+	*/
+	int findLetter(char letterToFind);
 
 
 private:
@@ -109,8 +119,20 @@ private:
 	/*
 	Input:
 		Node pointer
+		string
 	Output:
 		int
 	*/
 	int recursiveFind(Node* currentNode, string dataToFind);
+
+	/*
+	Input:
+		Node pointer
+		char
+	Output:
+		int
+	*/
+	int recursiveFindLetter(Node* currentNode, const char& letterToFind);
+
+	int recursiveScanString(const string& dataToScan, int stringIdnx, const char& letterToFind);
 };
