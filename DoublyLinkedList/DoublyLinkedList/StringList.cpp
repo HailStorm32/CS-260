@@ -50,39 +50,43 @@ bool StringList::insert(string dataToInsert)
 	}
 
 	currentNode = head;
-
+	
+	//Cycle until we find a spot to put the data
 	while (currentNode != NULL && insertAfter(dataToInsert, currentNode->data) == true)
 	{
 		prevNode = currentNode;
 		currentNode = currentNode->nextAddress;
 	}
 
-	//Reached the end of the list
+	//If at the end of the list
 	if (currentNode == NULL)
 	{
 		prevNode->nextAddress = newNode;
 		newNode->prevAddress = prevNode;
-		
+
 		tail = newNode;
 
 		itemsInList++;
 		return true;
 	}
+	//If at the begining of the list
 	else if (currentNode->prevAddress == NULL)
 	{
 		newNode->nextAddress = head;
 		head->prevAddress = newNode;
-		
+
 		head = newNode;
 
 		itemsInList++;
 		return true;
 	}
+	//If else where in the list
 	else
 	{
 		newNode->nextAddress = currentNode;
 		newNode->prevAddress = currentNode->prevAddress;
 		prevNode->nextAddress = newNode;
+		currentNode->prevAddress = newNode;
 		return true;
 	}
 
@@ -90,7 +94,7 @@ bool StringList::insert(string dataToInsert)
 
 int StringList::remove(string dataToRemove)
 {
-	if (dataToRemove.empty() == true || head == NULL)
+	if (dataToRemove.empty() == true || head == NULL || find(dataToRemove) == 0)
 	{
 		return 0;
 	}
@@ -130,7 +134,7 @@ int StringList::remove(string dataToRemove)
 					currentNode = head;
 					prevNode = currentNode->prevAddress;
 				}
-				else if(itemsInList == 0)
+				else if (itemsInList == 0)
 				{
 					delete currentNode;
 
@@ -149,7 +153,7 @@ int StringList::remove(string dataToRemove)
 				tail = prevNode;
 
 				delete currentNode;
-				
+
 				itemsDeleted++;
 				itemsInList--;
 
@@ -193,6 +197,53 @@ void StringList::removeAll()
 	tail = NULL;
 
 	itemsInList = 0;
+}
+
+int StringList::totalItems()
+{
+	return itemsInList;
+}
+
+void StringList::print(bool printBackward)
+{
+	if (head == NULL || tail == NULL)
+	{
+		cout << "List is empty" << endl;
+		return;
+	}
+
+	cout << "List contains: ";
+
+	if (printBackward == false)
+	{
+		recursivePrintForward(head);
+	}
+	else
+	{
+		recursivePrintBackward(tail);
+	}
+	cout << endl;
+
+}
+
+int StringList::find(string dataToFind)
+{
+	if (head == NULL || dataToFind.empty() == true)
+	{
+		return 0;
+	}
+
+	return recursiveFind(head, dataToFind);
+}
+
+int StringList::findLetter(char letterToFind)
+{
+	if (head == NULL || letterToFind == NULL)
+	{
+		return 0;
+	}
+
+	return recursiveFindLetter(head, letterToFind);
 }
 
 bool StringList::insertAfter(const string& dataToInsert, const string& dataInSlot) const
@@ -241,4 +292,86 @@ int StringList::recursiveRemoveAll(Node* currentNode)
 
 	recursiveRemoveAll(prevNode);
 	return 0;
+}
+
+bool StringList::recursivePrintForward(Node * currentNode)
+{
+	if (currentNode == NULL)
+	{
+		return true;
+	}
+
+	cout << currentNode->data << ", ";
+
+	recursivePrintForward(currentNode->nextAddress);
+
+	return false;
+}
+
+bool StringList::recursivePrintBackward(Node * currentNode)
+{
+	if (currentNode == NULL)
+	{
+		return true;
+	}
+
+	cout << currentNode->data << ", ";
+
+	recursivePrintBackward(currentNode->prevAddress);
+
+	return false;
+}
+
+int StringList::recursiveFind(Node * currentNode, string dataToFind)
+{
+	int numberOfFinds = 0;
+
+	if (currentNode == NULL)
+	{
+		return 0;
+	}
+
+	if (currentNode->data == dataToFind)
+	{
+		numberOfFinds++;
+	}
+
+	numberOfFinds += recursiveFind(currentNode->nextAddress, dataToFind);
+
+	return numberOfFinds;
+}
+
+int StringList::recursiveFindLetter(Node * currentNode, const char& letterToFind)
+{
+	int numberOfFinds = 0;
+
+	if (currentNode == NULL)
+	{
+		return 0;
+	}
+
+	numberOfFinds += recursiveScanString(currentNode->data, 0, letterToFind);
+
+	numberOfFinds += recursiveFindLetter(currentNode->nextAddress, letterToFind);
+
+	return numberOfFinds;
+}
+
+int StringList::recursiveScanString(const string& dataToScan, int stringIndx, const char& letterToFind)
+{
+	int numOfFinds = 0;
+
+	if (stringIndx == dataToScan.length())
+	{
+		return 0;
+	}
+
+	if (toupper(dataToScan[stringIndx]) == toupper(letterToFind))
+	{
+		numOfFinds++;
+	}
+
+	numOfFinds += recursiveScanString(dataToScan, ++stringIndx, letterToFind);
+
+	return numOfFinds;
 }

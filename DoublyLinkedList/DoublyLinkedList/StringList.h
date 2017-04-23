@@ -41,6 +41,36 @@ public:
 	*/
 	void removeAll();
 
+	/*
+	Output:
+		int - number of items in the list
+	*/
+	int totalItems();
+
+	/*
+	Input:
+		true - print list backward
+		false - print list forward
+	*/
+	void print(bool printBackward = false);
+
+	/*
+	Input:
+		string - no empty string
+	Output:
+		int - how many times the item shows in the list
+	*/
+	int find(string dataToFind);
+
+	/*
+	Input:
+		string - no empty string
+	Output:
+		int - how many times the letter shows in the list
+	*/
+	int findLetter(char letterToFind);
+
+
 private:
 	struct Node
 	{
@@ -69,4 +99,40 @@ private:
 		int - 1 or 0
 	*/
 	int recursiveRemoveAll(Node* currentNode);
+
+	/*
+	Input:
+		Node pointer
+	Output:
+		bool
+	*/
+	bool recursivePrintForward(Node* currentNode);
+
+	/*
+	Input:
+		Node pointer
+	Output:
+		bool
+	*/
+	bool recursivePrintBackward(Node* currentNode);
+
+	/*
+	Input:
+		Node pointer
+		string
+	Output:
+		int
+	*/
+	int recursiveFind(Node* currentNode, string dataToFind);
+
+	/*
+	Input:
+		Node pointer
+		char
+	Output:
+		int
+	*/
+	int recursiveFindLetter(Node* currentNode, const char& letterToFind);
+
+	int recursiveScanString(const string& dataToScan, int stringIdnx, const char& letterToFind);
 };
