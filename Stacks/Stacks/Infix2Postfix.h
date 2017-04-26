@@ -31,6 +31,7 @@ public:
 private:
 	stack<char> operatorStack;
 	string printBuffer;
+	const char operatorPriority[4] = { '-', '+', '/', '*' }; //{ '(', '-', '+', '/', '*' };
 
 	/*
 	Input:
@@ -64,5 +65,14 @@ private:
 		result from solving the expression
 	*/
 	float solvePostfix(string postfixExp);
+
+	/*
+	Input:
+		ONLY the following chars '(', '-', '+', '/', '*'
+	Output:
+		true - is greater than
+		false - is NOT greater than
+	*/
+	bool isGreaterThan(const char& leftSide, const char& rightSide);
 
 };

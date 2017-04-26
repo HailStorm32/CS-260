@@ -21,5 +21,7 @@ void main()
 
 	cout << "Author: Demetri Van Sickle\n\n" << endl;
 
-	solver.convertAndSolve(INFIX_EXP_2);
+	//solver.convertAndSolve(INFIX_EXP_5);
+
+	solver.convertAndSolve("1 * (2 + 3 * 4)+5");
 }
