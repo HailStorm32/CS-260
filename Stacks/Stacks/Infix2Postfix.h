@@ -30,6 +30,7 @@ public:
 
 private:
 	stack<char> operatorStack;
+	stack<int> operandStack;
 	string printBuffer;
 	const char operatorPriority[4] = { '-', '+', '/', '*' }; //{ '(', '-', '+', '/', '*' };
 

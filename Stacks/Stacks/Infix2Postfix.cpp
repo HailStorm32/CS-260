@@ -39,6 +39,8 @@ void Infix2Postfix::convertAndSolve(string infixExpWS)
 
 	cout << "Postfix: " << postfixExp << endl;
 
+	cout << "Result: " << solvePostfix(postfixExp) << endl;
+
 }
 
 string Infix2Postfix::removeWhiteSpace(string infixExpWS)
@@ -99,7 +101,6 @@ string Infix2Postfix::convert2Postfix(string infixExpNWS)
 		if (infixExpNWS[indx] >= 48 && infixExpNWS[indx] <= 57)
 		{
 			postfixExp += infixExpNWS[indx]; //put the number into the variable
-			//infixExpNWS.erase(indx, 1);
 		}
 		else if (infixExpNWS[indx] == '(')
 		{
@@ -159,7 +160,74 @@ string Infix2Postfix::convert2Postfix(string infixExpNWS)
 
 float Infix2Postfix::solvePostfix(string postfixExp)
 {
-	return 0.0f;
+	float num1 = 0;
+	float num2 = 0;
+	float result = 0;
+	char holder;
+	
+	for (int indx = 0; indx < postfixExp.length(); indx++)
+	{
+		//Put the operands into the stack
+		if (postfixExp[indx] >= 48 && postfixExp[indx] <= 57)
+		{
+			holder = postfixExp[indx];
+			operandStack.push(atoi(&holder));
+		}
+		
+		//Figure out what operation to preform
+		if (postfixExp[indx] == '+' || postfixExp[indx] == '-' || postfixExp[indx] == '*' || postfixExp[indx] == '/')
+		{
+			switch (postfixExp[indx])
+			{
+			case '+':
+				num1 = operandStack.top();
+				operandStack.pop();
+
+				num2 = operandStack.top();
+				operandStack.pop();
+
+				result = num1 + num2;
+				operandStack.push(result);
+				break;
+			case '-':
+				num2 = operandStack.top();
+				operandStack.pop();
+
+				num1 = operandStack.top();
+				operandStack.pop();
+
+				result = num1 - num2;
+				operandStack.push(result);
+				break;
+			case '*':
+				num1 = operandStack.top();
+				operandStack.pop();
+
+				num2 = operandStack.top();
+				operandStack.pop();
+
+				result = num1 * num2;
+				operandStack.push(result);
+				break;
+			case '/':
+				num2 = operandStack.top();
+				operandStack.pop();
+
+				num1 = operandStack.top();
+				operandStack.pop();
+
+				result = num1 / num2;
+				operandStack.push(result);
+				break;
+			}
+		}
+		//We have reached the end of the equation
+		/*if (operandStack.size() == 1)
+		{
+			break;
+		}*/
+	}
+	return result;
 }
 
 bool Infix2Postfix::isGreaterThan(const char & leftSide, const char & rightSide)

@@ -21,7 +21,27 @@ void main()
 
 	cout << "Author: Demetri Van Sickle\n\n" << endl;
 
-	//solver.convertAndSolve(INFIX_EXP_5);
+	solver.convertAndSolve(INFIX_EXP_1);
 
-	solver.convertAndSolve("1 * (2 + 3 * 4)+5");
+	cout << "\n\n";
+
+	solver.convertAndSolve(INFIX_EXP_2);
+
+	cout << "\n\n";
+
+	solver.convertAndSolve(INFIX_EXP_3);
+	
+	cout << "\n\n";
+
+	solver.convertAndSolve(INFIX_EXP_4);
+
+	cout << "\n\n";
+
+	solver.convertAndSolve(INFIX_EXP_5);
+
+	cout << "\n\n";
+
+	//Allow console to stay open
+	cin.get();
+	cin.ignore();
 }
