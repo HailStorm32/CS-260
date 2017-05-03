@@ -29,6 +29,8 @@ public:
 
 	~SchedulerSim();
 
+	void setupSim();
+
 private:
 	struct task
 	{
@@ -69,5 +71,5 @@ private:
 		dataStream - cString or string containing the data from file
 		returnTask - refrence to a task variable to return to
 	*/
-	bool interpretData(string dataStream, task& returnTask);
+	void interpretData(string dataStream, task& returnTask);
 };

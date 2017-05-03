@@ -11,5 +11,7 @@ Description:
 
 void main()
 {
+	SchedulerSim newSim;
 
+	newSim.setupSim();
 }
