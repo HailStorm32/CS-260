@@ -13,6 +13,7 @@ Description:
 #include <list>
 #include <fstream>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -30,6 +31,8 @@ public:
 	~SchedulerSim();
 
 	void setupSim();
+
+	void startSim();
 
 private:
 	struct task
@@ -72,4 +75,15 @@ private:
 		returnTask - refrence to a task variable to return to
 	*/
 	void interpretData(string dataStream, task& returnTask);
+
+	int tasksExist();
+
+	/*
+	Return:
+		True -- task needs to be ran again
+		false - task is done
+	*/
+	bool runTask(task& taskToRun);
+
+	void printTask(const task& taskToPrint);
 };

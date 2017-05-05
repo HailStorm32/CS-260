@@ -11,7 +11,11 @@ Description:
 
 void main()
 {
+	cout << "Author: Demetri Van Sickle\n\n" << endl;
+	
 	SchedulerSim newSim;
 
 	newSim.setupSim();
+	
+	newSim.startSim();
 }
