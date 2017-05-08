@@ -18,4 +18,8 @@ void main()
 	newSim.setupSim();
 	
 	newSim.startSim();
+
+	//Allow console to stay open
+	cin.get();
+	cin.ignore();
 }

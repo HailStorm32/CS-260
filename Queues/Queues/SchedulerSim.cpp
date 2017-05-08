@@ -16,6 +16,7 @@ SchedulerSim::SchedulerSim()
 
 SchedulerSim::~SchedulerSim()
 {
+	//Cycle through and delte all the queues
 	for (int indx = 0; indx < PRIORITY_SIZE; indx++)
 	{
 		delete PriorityQueue[indx];
@@ -30,30 +31,14 @@ void SchedulerSim::setupSim()
 
 	systemTime = 0;
 
-
-	//////////////////////////////////////
-	/*task debugTask;
-
-	debugTask.currentPriority = 2;
-	debugTask.elapsedTime = 1000;
-	debugTask.endTime = 300;
-	debugTask.originalPriority = 0;
-	debugTask.processID = 1;
-	debugTask.requiredTime = 45;
-	debugTask.startTime = 200;*/
-	///////////////////////////////////////
-
 	//Setup the table;
 	cout << setw(8) << setfill(' ') << "        Initial" << setw(8) << setfill(' ') << "Time"
 		<< setw(8) << setfill(' ') << "Time" << setw(8) << setfill(' ') << "Time"
 		<< setw(8) << setfill(' ') << "     Elapsed" << setw(8) << setfill(' ') << "   Final\n";
-
 	cout << "PID" << setw(8) << setfill(' ') << "     Priority"
 		<< setw(8) << setfill(' ') << "Needed" << setw(8) << setfill(' ') << "Started"
 		<< setw(8) << setfill(' ') << "Ended" << setw(8) << setfill(' ') << "Time"
 		<< setw(8) << setfill(' ') << "     Priority\n";
-
-	//printTask(debugTask);
 }
 
 void SchedulerSim::startSim()
@@ -61,6 +46,7 @@ void SchedulerSim::startSim()
 	int sectionToServe = tasksExist();
 	task tempTask;
 
+	//While there are still tasks to do
 	while (tasksExist() != -1)
 	{
 		tempTask = PriorityQueue[sectionToServe]->front();
@@ -82,6 +68,7 @@ void SchedulerSim::startSim()
 		{
 			printTask(tempTask);
 		}
+		sectionToServe = tasksExist();
 	}
 }
 
@@ -151,13 +138,15 @@ void SchedulerSim::interpretData(string dataStream, task& returnTask)
 		indx++;
 	}
 
-	returnTask.requiredTime = atoi(holder.c_str());
+	returnTask.originalTimeRequired = atoi(holder.c_str());
+	returnTask.requiredTime = returnTask.originalTimeRequired;
 
 	returnTask.processID = processID;
 
 	returnTask.elapsedTime = 0;
 	returnTask.startTime = 0;
 	returnTask.endTime = 0;
+	returnTask.hasRun = false;
 
 	processID++;
 }
@@ -180,13 +169,14 @@ bool SchedulerSim::runTask(task& taskToRun)
 	int passedTime = 0;
 
 	//Only give a start time if task hasn't been run already
-	if (taskToRun.startTime == 0)
+	if (taskToRun.hasRun == false)
 	{
 		taskToRun.startTime = systemTime;
+		taskToRun.hasRun = true;
 	}
 
 	//"run" the task until the time has passed
-	while (taskToRun.requiredTime <= passedTime && passedTime <= TIME_SLICE)
+	while (taskToRun.requiredTime > passedTime && passedTime < TIME_SLICE)
 	{
 		passedTime++;
 		systemTime++;
@@ -217,7 +207,7 @@ void SchedulerSim::printTask(const task & taskToPrint)
 	const int width = 10;
 	
 	cout << taskToPrint.processID << setw(width) << setfill(' ') << "     " << taskToPrint.originalPriority
-		<< setw(width) << setfill(' ') << taskToPrint.requiredTime << setw(width) << setfill(' ') << taskToPrint.startTime
+		<< setw(width) << setfill(' ') << taskToPrint.originalTimeRequired << setw(width) << setfill(' ') << taskToPrint.startTime
 		<< setw(width) << setfill(' ') << taskToPrint.endTime << setw(width) << setfill(' ') << taskToPrint.elapsedTime
 		<< setw(width) << setfill(' ') << "     " << taskToPrint.currentPriority << endl;
 }

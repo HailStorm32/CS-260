@@ -144,11 +144,9 @@
   <ItemGroup>
     <ClCompile Include="SchedulerSim.cpp" />
     <ClCompile Include="SchedulerSimTest.cpp" />
-    <ClCompile Include="task.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SchedulerSim.h" />
-    <ClInclude Include="task.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

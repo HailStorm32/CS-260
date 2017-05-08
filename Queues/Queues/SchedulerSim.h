@@ -40,10 +40,12 @@ private:
 		unsigned int originalPriority;
 		unsigned int currentPriority;
 		unsigned int requiredTime;
+		unsigned int originalTimeRequired;
 		unsigned int elapsedTime;
 		unsigned int processID;
 		unsigned int startTime;
 		unsigned int endTime;
+		bool hasRun;
 	};
 
 	//Set up the priority queue

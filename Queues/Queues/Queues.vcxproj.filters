@@ -21,15 +21,9 @@
     <ClCompile Include="SchedulerSim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="task.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SchedulerSim.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
