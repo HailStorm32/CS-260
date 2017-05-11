@@ -11,5 +11,7 @@ Description:
 
 void main()
 {
+	cout << "Author: Demetri Van Sickle\n\n" << endl;
+
 
 }

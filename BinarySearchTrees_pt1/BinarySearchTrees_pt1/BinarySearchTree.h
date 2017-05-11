@@ -9,6 +9,7 @@ Description:
 */
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -16,7 +17,30 @@ using namespace std;
 class BinarySearchTree
 {
 public:
+	BinarySearchTree();
+
+	~BinarySearchTree();
+
+	/*
+	Input:
+		string -- no empty string
+	Return:
+		true -- string inserted
+		false -- string NOT inserted
+	*/
+	bool insert(string dataToInsert);
 
 private:
+	struct Node
+	{
+		string data;
+		Node* leftChild;
+		Node* rightChild;
+	};
 
+	Node* head;
+
+	unsigned int itemsInTree;
+
+	bool insertRight(const string& dataToInsert, const string& dataInSlot) const;
 };
