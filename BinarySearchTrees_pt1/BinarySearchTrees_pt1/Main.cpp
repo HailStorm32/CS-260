@@ -13,5 +13,12 @@ void main()
 {
 	cout << "Author: Demetri Van Sickle\n\n" << endl;
 
+	BinarySearchTree tree1;
 
+	tree1.insert("T");
+	tree1.insert("A");
+	tree1.insert("F");
+	tree1.insert("Y");
+	tree1.insert("R");
+	tree1.insert("C");
 }

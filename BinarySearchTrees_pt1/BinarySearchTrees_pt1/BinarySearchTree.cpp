@@ -33,6 +33,8 @@ bool BinarySearchTree::insert(string dataToInsert)
 	//Node* prevNode;
 	Node* newNode = new Node;
 
+	bool  insertLeft = false;
+
 	newNode->data = dataToInsert;
 	newNode->leftChild = NULL;
 	newNode->rightChild = NULL;
@@ -44,8 +46,9 @@ bool BinarySearchTree::insert(string dataToInsert)
 		return true;
 	}
 	
+	currentNode = head;
 
-	while (currentNode == NULL)
+	while (currentNode->leftChild == NULL || currentNode->rightChild)
 	{
 		if (insertRight(newNode->data, currentNode->data))
 		{
