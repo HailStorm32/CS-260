@@ -1,7 +1,7 @@
 #pragma once
 /*
 Author: Demetri Van Sickle
-Date: 5/8/17
+Date: 5/12/17
 IDE: Visual Studio 2015
 Program: Main.cpp
 Description:
@@ -23,10 +23,10 @@ public:
 
 	/*
 	Input:
-		string -- no empty string
+	string -- no empty string
 	Return:
-		true -- string inserted
-		false -- string NOT inserted
+	true -- string inserted
+	false -- string NOT inserted
 	*/
 	bool insert(string dataToInsert);
 

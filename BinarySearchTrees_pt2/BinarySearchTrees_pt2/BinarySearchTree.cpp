@@ -1,6 +1,6 @@
 /*
 Author: Demetri Van Sickle
-Date: 5/8/17
+Date: 5/12/17
 IDE: Visual Studio 2015
 Program: Main.cpp
 Description:
@@ -45,7 +45,7 @@ bool BinarySearchTree::insert(string dataToInsert)
 		head = newNode;
 		return true;
 	}
-	
+
 	currentNode = head;
 
 	//Cycle through tree until we find a null node that we can place data into
@@ -158,5 +158,3 @@ void BinarySearchTree::printPreOrderR(Node* currentNode)
 		printInOrderR(currentNode->rightChild);
 	}
 }
-
-
