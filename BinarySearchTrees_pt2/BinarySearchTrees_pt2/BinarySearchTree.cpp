@@ -43,6 +43,8 @@ bool BinarySearchTree::insert(string dataToInsert)
 	if (head == NULL)
 	{
 		head = newNode;
+
+		itemsInTree++;
 		return true;
 	}
 
@@ -69,48 +71,37 @@ bool BinarySearchTree::insert(string dataToInsert)
 	if (insertLeft == false)
 	{
 		prevNode->rightChild = newNode;
+		itemsInTree++;
 	}
 	else
 	{
 		prevNode->leftChild = newNode;
+		itemsInTree++;
 	}
 
 	return true;
 }
 
-void BinarySearchTree::printInOrder(const function<int(string, int)> &funcToCall)
+void BinarySearchTree::traverseInOrder(const function<void(string, int)> &funcToCall)
 {
-	printInOrderR(head, funcToCall);
+	traverseInOrderR(head, funcToCall, 0);
 	cout << endl;
 }
 
-void BinarySearchTree::printPostOrder(const function<int(string, int)> &funcToCall)
+void BinarySearchTree::traversePostOrder(const function<void(string, int)> &funcToCall)
 {
-	printPostOrderR(head, funcToCall);
+	traversePostOrderR(head, funcToCall, 0);
 	cout << endl;
 }
 
-void BinarySearchTree::printPreOrder(const function<int(string, int)> &funcToCall)
+void BinarySearchTree::traversePreOrder(const function<void(string, int)> &funcToCall)
 {
-	printPreOrderR(head, funcToCall);
+	traversePreOrderR(head, funcToCall, 0);
 	cout << endl;
 }
 
-int BinarySearchTree::findHeight(string dataOfNode, int currentHeight)
-{
-	int nodeHeight = 0;
-	bool dataFound = false;
-
-	nodeHeight = findHeightR(head, dataOfNode, dataFound, currentHeight);
-
-	//The function is off by one only if its not zero
-	if (nodeHeight > 0)
-	{
-		++nodeHeight;
-	}
-
-	return nodeHeight;
-}
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool BinarySearchTree::insertRight(const string & dataToInsert, const string & dataInSlot) const
 {
@@ -145,56 +136,47 @@ bool BinarySearchTree::insertRight(const string & dataToInsert, const string & d
 	}
 }
 
-void BinarySearchTree::printInOrderR(Node * currentNode, const function<int(string, int)> &funcToCall)
+void BinarySearchTree::traverseInOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height)
 {
 	if (currentNode != NULL)
 	{
-		printInOrderR(currentNode->leftChild, funcToCall);
-		cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
-		printInOrderR(currentNode->rightChild, funcToCall);
-	}
-}
-
-void BinarySearchTree::printPostOrderR(Node* currentNode, const function<int(string, int)> &funcToCall)
-{
-	if (currentNode != NULL)
-	{
-		printInOrderR(currentNode->leftChild, funcToCall);
-		printInOrderR(currentNode->rightChild, funcToCall);
-		cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
-	}
-}
-
-void BinarySearchTree::printPreOrderR(Node* currentNode, const function<int(string, int)> &funcToCall)
-{
-	if (currentNode != NULL)
-	{
-		cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
-		printInOrderR(currentNode->leftChild, funcToCall);
-		printInOrderR(currentNode->rightChild, funcToCall);
-	}
-}
-
-//Figure out why height get incresly off
-int BinarySearchTree::findHeightR(Node* currentNode, const string &dataOfNode, bool& dataFound, int& currentHeight)
-{
-	if (currentNode == NULL)
-	{
-		return currentHeight;
-	}
-
-	if (currentNode->data == dataOfNode || dataFound == true)
-	{
-		dataFound = true;
-		return currentHeight;
+		traverseInOrderR(currentNode->leftChild, funcToCall, ++height);
+		//cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
+		funcToCall(currentNode->data, --height);
+		traverseInOrderR(currentNode->rightChild, funcToCall, ++height);
 	}
 	else
 	{
-		currentHeight++;
+		--height;
 	}
+}
 
-	findHeightR(currentNode->leftChild, dataOfNode, dataFound, currentHeight);
-	findHeightR(currentNode->rightChild, dataOfNode, dataFound, currentHeight);
+void BinarySearchTree::traversePostOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height)
+{
+	int originalHeight = 0;
+	
+	if (currentNode != NULL)
+	{
+		originalHeight = height;
+		traversePostOrderR(currentNode->leftChild, funcToCall, ++height);
+		height = originalHeight;
+		traversePostOrderR(currentNode->rightChild, funcToCall, ++height);
+		funcToCall(currentNode->data, --height);
+		//cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
+	}
+}
 
-	return currentHeight;
+void BinarySearchTree::traversePreOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height)
+{
+	int originalHeight = 0;
+
+	if (currentNode != NULL)
+	{
+		//cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
+		originalHeight = height;
+		funcToCall(currentNode->data, height);
+		traversePreOrderR(currentNode->leftChild, funcToCall, ++height);
+		height = originalHeight;
+		traversePreOrderR(currentNode->rightChild, funcToCall, ++height);
+	}
 }

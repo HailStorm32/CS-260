@@ -31,13 +31,12 @@ public:
 	*/
 	bool insert(string dataToInsert);
 
-	void printInOrder(const function<int(string, int)> &funcToCall);
+	void traverseInOrder(const function<void(string, int)> &funcToCall);
 
-	void printPostOrder(const function<int(string, int)> &funcToCall);
+	void traversePostOrder(const function<void(string, int)> &funcToCall);
 
-	void printPreOrder(const function<int(string, int)> &funcToCall);
+	void traversePreOrder(const function<void(string, int)> &funcToCall);
 
-	int findHeight(string dataOfNode, int currentHeight = 0);
 
 private:
 	struct Node
@@ -53,11 +52,9 @@ private:
 
 	bool insertRight(const string& dataToInsert, const string& dataInSlot) const;
 
-	void printInOrderR(Node* currentNode, const function<int(string, int)> &funcToCall);
+	void traverseInOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height);
 
-	void printPostOrderR(Node* currentNode, const function<int(string, int)> &funcToCall);
+	void traversePostOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height);
 
-	void printPreOrderR(Node* currentNode, const function<int(string, int)> &funcToCall);
-
-	int findHeightR(Node* currentNode, const string &dataOfNode, bool& dataFound, int& currentHeight);
+	void traversePreOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height);
 };
