@@ -143,8 +143,8 @@ void BinarySearchTree::printPostOrderR(Node* currentNode)
 {
 	if (currentNode != NULL)
 	{
-		printInOrderR(currentNode->leftChild);
-		printInOrderR(currentNode->rightChild);
+		printPostOrderR(currentNode->leftChild);
+		printPostOrderR(currentNode->rightChild);
 		cout << currentNode->data << " ";
 	}
 }
@@ -154,8 +154,8 @@ void BinarySearchTree::printPreOrderR(Node* currentNode)
 	if (currentNode != NULL)
 	{
 		cout << currentNode->data << " ";
-		printInOrderR(currentNode->leftChild);
-		printInOrderR(currentNode->rightChild);
+		printPreOrderR(currentNode->leftChild);
+		printPreOrderR(currentNode->rightChild);
 	}
 }
 
