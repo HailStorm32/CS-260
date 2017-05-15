@@ -10,6 +10,7 @@ Description:
 
 #include <iostream>
 #include <string>
+#include <functional>
 
 using namespace std;
 
@@ -25,16 +26,18 @@ public:
 	Input:
 	string -- no empty string
 	Return:
-	true -- string inserted
-	false -- string NOT inserted
+		true -- string inserted
+		 false -- string NOT inserted
 	*/
 	bool insert(string dataToInsert);
 
-	void printInOrder();
+	void printInOrder(const function<int(string, int)> &funcToCall);
 
-	void printPostOrder();
+	void printPostOrder(const function<int(string, int)> &funcToCall);
 
-	void printPreOrder();
+	void printPreOrder(const function<int(string, int)> &funcToCall);
+
+	int findHeight(string dataOfNode, int currentHeight = 0);
 
 private:
 	struct Node
@@ -50,9 +53,11 @@ private:
 
 	bool insertRight(const string& dataToInsert, const string& dataInSlot) const;
 
-	void printInOrderR(Node* currentNode);
+	void printInOrderR(Node* currentNode, const function<int(string, int)> &funcToCall);
 
-	void printPostOrderR(Node* currentNode);
+	void printPostOrderR(Node* currentNode, const function<int(string, int)> &funcToCall);
 
-	void printPreOrderR(Node* currentNode);
+	void printPreOrderR(Node* currentNode, const function<int(string, int)> &funcToCall);
+
+	int findHeightR(Node* currentNode, const string &dataOfNode, bool& dataFound, int& currentHeight);
 };

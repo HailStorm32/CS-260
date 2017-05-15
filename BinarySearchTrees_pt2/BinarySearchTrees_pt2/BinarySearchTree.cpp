@@ -78,22 +78,38 @@ bool BinarySearchTree::insert(string dataToInsert)
 	return true;
 }
 
-void BinarySearchTree::printInOrder()
+void BinarySearchTree::printInOrder(const function<int(string, int)> &funcToCall)
 {
-	printInOrderR(head);
+	printInOrderR(head, funcToCall);
 	cout << endl;
 }
 
-void BinarySearchTree::printPostOrder()
+void BinarySearchTree::printPostOrder(const function<int(string, int)> &funcToCall)
 {
-	printPostOrderR(head);
+	printPostOrderR(head, funcToCall);
 	cout << endl;
 }
 
-void BinarySearchTree::printPreOrder()
+void BinarySearchTree::printPreOrder(const function<int(string, int)> &funcToCall)
 {
-	printPreOrderR(head);
+	printPreOrderR(head, funcToCall);
 	cout << endl;
+}
+
+int BinarySearchTree::findHeight(string dataOfNode, int currentHeight)
+{
+	int nodeHeight = 0;
+	bool dataFound = false;
+
+	nodeHeight = findHeightR(head, dataOfNode, dataFound, currentHeight);
+
+	//The function is off by one only if its not zero
+	if (nodeHeight > 0)
+	{
+		++nodeHeight;
+	}
+
+	return nodeHeight;
 }
 
 bool BinarySearchTree::insertRight(const string & dataToInsert, const string & dataInSlot) const
@@ -129,32 +145,56 @@ bool BinarySearchTree::insertRight(const string & dataToInsert, const string & d
 	}
 }
 
-void BinarySearchTree::printInOrderR(Node * currentNode)
+void BinarySearchTree::printInOrderR(Node * currentNode, const function<int(string, int)> &funcToCall)
 {
 	if (currentNode != NULL)
 	{
-		printInOrderR(currentNode->leftChild);
-		cout << currentNode->data << " ";
-		printInOrderR(currentNode->rightChild);
+		printInOrderR(currentNode->leftChild, funcToCall);
+		cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
+		printInOrderR(currentNode->rightChild, funcToCall);
 	}
 }
 
-void BinarySearchTree::printPostOrderR(Node* currentNode)
+void BinarySearchTree::printPostOrderR(Node* currentNode, const function<int(string, int)> &funcToCall)
 {
 	if (currentNode != NULL)
 	{
-		printInOrderR(currentNode->leftChild);
-		printInOrderR(currentNode->rightChild);
-		cout << currentNode->data << " ";
+		printInOrderR(currentNode->leftChild, funcToCall);
+		printInOrderR(currentNode->rightChild, funcToCall);
+		cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
 	}
 }
 
-void BinarySearchTree::printPreOrderR(Node* currentNode)
+void BinarySearchTree::printPreOrderR(Node* currentNode, const function<int(string, int)> &funcToCall)
 {
 	if (currentNode != NULL)
 	{
-		cout << currentNode->data << " ";
-		printInOrderR(currentNode->leftChild);
-		printInOrderR(currentNode->rightChild);
+		cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
+		printInOrderR(currentNode->leftChild, funcToCall);
+		printInOrderR(currentNode->rightChild, funcToCall);
 	}
+}
+
+//Figure out why height get incresly off
+int BinarySearchTree::findHeightR(Node* currentNode, const string &dataOfNode, bool& dataFound, int& currentHeight)
+{
+	if (currentNode == NULL)
+	{
+		return currentHeight;
+	}
+
+	if (currentNode->data == dataOfNode || dataFound == true)
+	{
+		dataFound = true;
+		return currentHeight;
+	}
+	else
+	{
+		currentHeight++;
+	}
+
+	findHeightR(currentNode->leftChild, dataOfNode, dataFound, currentHeight);
+	findHeightR(currentNode->rightChild, dataOfNode, dataFound, currentHeight);
+
+	return currentHeight;
 }
