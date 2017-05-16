@@ -25,13 +25,10 @@ void main()
 	tree1.insert("Y");
 	tree1.insert("R");
 	tree1.insert("C");
-	//tree1.insert("S");
-
-	/*cout << tree1.findHeight("T") << endl;
-	cout << tree1.findHeight("F") << endl;
-	cout << tree1.findHeight("C") << endl;
-	cout << tree1.findHeight("R") << endl;
-	cout << tree1.findHeight("S") << endl;*/
+	tree1.insert("J");
+	tree1.insert("S");
+	tree1.insert("K");
+	tree1.insert("E");
 
 	/*tree1.insert("Jynx");
 	tree1.insert("Charmander");
@@ -54,6 +51,8 @@ void main()
 
 	cout << "\nPostOrder:" << endl;
 	tree1.traversePostOrder(printNode);
+
+	tree1.deleteNode("R");
 
 	//Allow console to stay open
 	cin.get();

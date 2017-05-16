@@ -100,6 +100,28 @@ void BinarySearchTree::traversePreOrder(const function<void(string, int)> &funcT
 	cout << endl;
 }
 
+bool BinarySearchTree::deleteNode(const string dataToDelete)
+{
+	bool dataFound = false;
+	Node* nodeToDelete = NULL;
+	Node* prevNode = NULL;
+
+	findNodeR(head, dataToDelete, nodeToDelete, prevNode, dataFound);
+
+	if (nodeToDelete == NULL)
+	{
+		cout << "ERROR" << endl;
+		return false;
+	}
+
+	//Debug only
+	cout << "Node to delete: " << nodeToDelete->data << endl;
+	cout << "Prev node: " << prevNode->data << endl;
+
+	return true;
+
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -154,7 +176,7 @@ void BinarySearchTree::traverseInOrderR(Node* currentNode, const function<void(s
 void BinarySearchTree::traversePostOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height)
 {
 	int originalHeight = 0;
-	
+
 	if (currentNode != NULL)
 	{
 		originalHeight = height;
@@ -178,5 +200,36 @@ void BinarySearchTree::traversePreOrderR(Node* currentNode, const function<void(
 		traversePreOrderR(currentNode->leftChild, funcToCall, ++height);
 		height = originalHeight;
 		traversePreOrderR(currentNode->rightChild, funcToCall, ++height);
+	}
+}
+
+void BinarySearchTree::findNodeR(Node * currentNode, const string& dataOfNode, Node *& foundAddress, Node *& prevAddress, bool& dataFound)
+{
+	if (currentNode == NULL)
+	{
+		return;
+	}
+
+	if (currentNode->data == dataOfNode)
+	{
+		dataFound = true;
+
+		foundAddress = currentNode;
+		return;
+	}
+	
+	if (dataFound != true)
+	{
+		prevAddress = currentNode;
+
+		findNodeR(currentNode->leftChild, dataOfNode, foundAddress, prevAddress, dataFound);
+
+		prevAddress = currentNode;
+
+		findNodeR(currentNode->rightChild, dataOfNode, foundAddress, prevAddress, dataFound);
+	}
+	else
+	{
+		return;
 	}
 }

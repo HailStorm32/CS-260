@@ -27,7 +27,7 @@ public:
 	string -- no empty string
 	Return:
 		true -- string inserted
-		 false -- string NOT inserted
+		false -- string NOT inserted
 	*/
 	bool insert(string dataToInsert);
 
@@ -36,6 +36,8 @@ public:
 	void traversePostOrder(const function<void(string, int)> &funcToCall);
 
 	void traversePreOrder(const function<void(string, int)> &funcToCall);
+
+	bool deleteNode(const string dataToDelete);
 
 
 private:
@@ -57,4 +59,6 @@ private:
 	void traversePostOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height);
 
 	void traversePreOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height);
+
+	void findNodeR(Node* currentNode, const string &dataOfNode, Node* &foundAddress, Node* &prevAddress, bool& dataFound);
 };
