@@ -61,4 +61,6 @@ private:
 	void traversePreOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height);
 
 	void findNodeR(Node* currentNode, const string &dataOfNode, Node* &foundAddress, Node* &prevAddress, bool& dataFound);
+
+	void findNodeR(Node* currentNode, const string &dataOfNode, bool& dataFound);
 };

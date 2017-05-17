@@ -43,16 +43,18 @@ void main()
 	tree1.insert("Bulbasaur");
 	tree1.insert("Abra");*/
 
-	cout << "\nPreOrder:" << endl;
-	tree1.traversePreOrder(printNode);
+	//cout << "\nPreOrder:" << endl;
+	//tree1.traversePreOrder(printNode);
 
-	cout << "\nInOrder:" << endl;
+	//cout << "\nInOrder:" << endl;
 	tree1.traverseInOrder(printNode);
 
-	cout << "\nPostOrder:" << endl;
-	tree1.traversePostOrder(printNode);
+	//cout << "\nPostOrder:" << endl;
+	//tree1.traversePostOrder(printNode);
 
-	tree1.deleteNode("R");
+	tree1.deleteNode("T");
+
+	tree1.traverseInOrder(printNode);
 
 	//Allow console to stay open
 	cin.get();

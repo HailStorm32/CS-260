@@ -23,9 +23,19 @@ BinarySearchTree::~BinarySearchTree()
 
 bool BinarySearchTree::insert(string dataToInsert)
 {
+	bool dataFound = false;
+	
 	//Make sure string isnt empty
 	if (dataToInsert.empty())
 	{
+		return false;
+	}
+
+	//See if data isnt already in the tree
+	findNodeR(head, dataToInsert, dataFound);
+	if (dataFound == true)
+	{
+		cout << "Error! Data already in tree!" << endl;
 		return false;
 	}
 
@@ -105,21 +115,112 @@ bool BinarySearchTree::deleteNode(const string dataToDelete)
 	bool dataFound = false;
 	Node* nodeToDelete = NULL;
 	Node* prevNode = NULL;
+	Node* currentNode = NULL;
+	Node* tempPointerHolder = NULL;
+	string tempValueHolder = "";
 
-	findNodeR(head, dataToDelete, nodeToDelete, prevNode, dataFound);
-
-	if (nodeToDelete == NULL)
+	if (head == NULL)
 	{
-		cout << "ERROR" << endl;
+		cout << "Tree already empty" << endl;
 		return false;
 	}
 
+	//Find the node we want to delete, and get its address
+	findNodeR(head, dataToDelete, nodeToDelete, prevNode, dataFound);
+
 	//Debug only
-	cout << "Node to delete: " << nodeToDelete->data << endl;
-	cout << "Prev node: " << prevNode->data << endl;
+	//cout << "Node to delete: " << nodeToDelete->data << endl;
+	//cout << "Prev node: " << prevNode->data << endl;
+
+	//If leaf Node
+	if (nodeToDelete->leftChild == NULL && nodeToDelete->rightChild == NULL)
+	{
+		//If this node was on right of parent node
+		if (nodeToDelete->data > prevNode->data)
+		{
+			delete nodeToDelete;
+			itemsInTree--;
+			
+			//set parent's pointer to null
+			prevNode->rightChild = NULL;
+		}
+		//If this node was to the left of the parent node
+		else
+		{
+			delete nodeToDelete;
+			itemsInTree--;
+
+			//set parent's pointer to null
+			prevNode->rightChild = NULL;
+		}
+	}
+	//If node only has a left child
+	else if (nodeToDelete->leftChild != NULL && nodeToDelete->rightChild == NULL)
+	{
+		//If this node was on right of parent node
+		if (nodeToDelete->data > prevNode->data)
+		{
+			prevNode->rightChild = nodeToDelete->leftChild;
+			delete nodeToDelete;
+			itemsInTree--;
+		}
+		//If this node was to the left of the parent node
+		else
+		{
+			prevNode->leftChild = nodeToDelete->leftChild;
+			delete nodeToDelete;
+			itemsInTree--;
+		}
+	}
+	//If node only has right child
+	else if (nodeToDelete->leftChild == NULL && nodeToDelete->rightChild != NULL)
+	{
+		//If this node was on right of parent node
+		if (nodeToDelete->data > prevNode->data)
+		{
+			prevNode->rightChild = nodeToDelete->rightChild;
+			delete nodeToDelete;
+			itemsInTree--;
+		}
+		//If this node was to the left of the parent node
+		else
+		{
+			prevNode->leftChild = nodeToDelete->rightChild;
+			delete nodeToDelete;
+			itemsInTree--;
+		}
+	}
+	//If node has left and right child
+	else if (nodeToDelete->leftChild != NULL && nodeToDelete->rightChild != NULL)
+	{
+		currentNode = nodeToDelete->leftChild;
+		
+		//Find the largest value on the left of the nodeToDelete by going to the right until we hit a null
+		while (currentNode->rightChild != NULL)
+		{
+			currentNode = currentNode->rightChild;
+		}
+
+		tempValueHolder = currentNode->data;
+
+		//Move variables around so that their naming makes more sense 
+		tempPointerHolder = nodeToDelete;
+		nodeToDelete = currentNode;
+		currentNode = tempPointerHolder;
+
+		//Now delete the soon to be duplicate node by calling the deleteNode function on it
+		deleteNode(nodeToDelete->data);
+
+		//Replace the nodeToDelete with the biggest node in the left sub-tree
+		currentNode->data = tempValueHolder;
+	}
+	else
+	{
+		cout << "ERROR! Cant delete node!" << endl;
+		return false;
+	}
 
 	return true;
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,13 +264,8 @@ void BinarySearchTree::traverseInOrderR(Node* currentNode, const function<void(s
 	if (currentNode != NULL)
 	{
 		traverseInOrderR(currentNode->leftChild, funcToCall, ++height);
-		//cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
 		funcToCall(currentNode->data, --height);
 		traverseInOrderR(currentNode->rightChild, funcToCall, ++height);
-	}
-	else
-	{
-		--height;
 	}
 }
 
@@ -179,12 +275,11 @@ void BinarySearchTree::traversePostOrderR(Node* currentNode, const function<void
 
 	if (currentNode != NULL)
 	{
-		originalHeight = height;
+		originalHeight = height;//Reset the height 
 		traversePostOrderR(currentNode->leftChild, funcToCall, ++height);
-		height = originalHeight;
+		height = originalHeight;//Reset the height
 		traversePostOrderR(currentNode->rightChild, funcToCall, ++height);
 		funcToCall(currentNode->data, --height);
-		//cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
 	}
 }
 
@@ -194,39 +289,83 @@ void BinarySearchTree::traversePreOrderR(Node* currentNode, const function<void(
 
 	if (currentNode != NULL)
 	{
-		//cout << currentNode->data << "(" << funcToCall(currentNode->data, 0) << ")" << " ";
-		originalHeight = height;
+		originalHeight = height;//Reset the height
 		funcToCall(currentNode->data, height);
 		traversePreOrderR(currentNode->leftChild, funcToCall, ++height);
-		height = originalHeight;
+		height = originalHeight;//Reset the height
 		traversePreOrderR(currentNode->rightChild, funcToCall, ++height);
 	}
 }
 
 void BinarySearchTree::findNodeR(Node * currentNode, const string& dataOfNode, Node *& foundAddress, Node *& prevAddress, bool& dataFound)
 {
-	if (currentNode == NULL)
+	//Make sure string isnt empty
+	if (dataOfNode.empty())
 	{
-		return;
-	}
-
-	if (currentNode->data == dataOfNode)
-	{
-		dataFound = true;
-
-		foundAddress = currentNode;
 		return;
 	}
 	
+	if (head == NULL || currentNode == NULL)
+	{
+		return;
+	}
+
+	if (currentNode->leftChild != NULL && currentNode->leftChild->data == dataOfNode)
+	{
+		dataFound = true;
+		prevAddress = currentNode;
+		foundAddress = currentNode->leftChild;
+		return;
+	}
+	else if (currentNode->rightChild != NULL && currentNode->rightChild->data == dataOfNode)
+	{
+		dataFound = true;
+		prevAddress = currentNode;
+		foundAddress = currentNode->rightChild;
+		return;
+	}
+
+	//Cycle the tree untill we find our node
 	if (dataFound != true)
 	{
-		prevAddress = currentNode;
-
 		findNodeR(currentNode->leftChild, dataOfNode, foundAddress, prevAddress, dataFound);
-
-		prevAddress = currentNode;
-
 		findNodeR(currentNode->rightChild, dataOfNode, foundAddress, prevAddress, dataFound);
+	}
+	else
+	{
+		return;
+	}
+}
+
+void BinarySearchTree::findNodeR(Node * currentNode, const string & dataOfNode, bool & dataFound)
+{
+	//Make sure string isnt empty
+	if (dataOfNode.empty())
+	{
+		return;
+	}
+	
+	if (head == NULL || currentNode == NULL)
+	{
+		return;
+	}
+
+	if (currentNode->leftChild != NULL && currentNode->leftChild->data == dataOfNode)
+	{
+		dataFound = true;
+		return;
+	}
+	else if (currentNode->rightChild != NULL && currentNode->rightChild->data == dataOfNode)
+	{
+		dataFound = true;
+		return;
+	}
+
+	//Cycle the tree untill we find our node
+	if (dataFound != true)
+	{
+		findNodeR(currentNode->leftChild, dataOfNode, dataFound);
+		findNodeR(currentNode->rightChild, dataOfNode, dataFound);
 	}
 	else
 	{
