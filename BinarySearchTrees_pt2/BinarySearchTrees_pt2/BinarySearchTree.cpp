@@ -132,6 +132,8 @@ bool BinarySearchTree::deleteNode(const string dataToDelete)
 	//cout << "Node to delete: " << nodeToDelete->data << endl;
 	//cout << "Prev node: " << prevNode->data << endl;
 
+	//if(nodeToDelete->data)
+
 	//If leaf Node
 	if (nodeToDelete->leftChild == NULL && nodeToDelete->rightChild == NULL)
 	{
@@ -223,6 +225,15 @@ bool BinarySearchTree::deleteNode(const string dataToDelete)
 	return true;
 }
 
+BinarySearchTree * BinarySearchTree::deepCopy(const function<void(string, BinarySearchTree*)>& funcToCall)
+{
+	BinarySearchTree* copyOfTree = new BinarySearchTree;
+	
+	traversePreOrderR(head, insertCopy, copyOfTree);
+
+	return copyOfTree;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -297,6 +308,16 @@ void BinarySearchTree::traversePreOrderR(Node* currentNode, const function<void(
 	}
 }
 
+void BinarySearchTree::traversePreOrderR(Node * currentNode, const function<void(string, BinarySearchTree*)>& funcToCall, BinarySearchTree * newTreePointer)
+{
+	if (currentNode != NULL)
+	{
+		funcToCall(currentNode->data, newTreePointer);
+		traversePreOrderR(currentNode->leftChild, funcToCall, newTreePointer);
+		traversePreOrderR(currentNode->rightChild, funcToCall, newTreePointer);
+	}
+}
+
 void BinarySearchTree::findNodeR(Node * currentNode, const string& dataOfNode, Node *& foundAddress, Node *& prevAddress, bool& dataFound)
 {
 	//Make sure string isnt empty
@@ -305,12 +326,27 @@ void BinarySearchTree::findNodeR(Node * currentNode, const string& dataOfNode, N
 		return;
 	}
 	
+	//if list is empty or we left the tree (shouldnt happen)
 	if (head == NULL || currentNode == NULL)
 	{
 		return;
 	}
 
-	if (currentNode->leftChild != NULL && currentNode->leftChild->data == dataOfNode)
+	//See if we have found the data
+	if (currentNode->data == dataOfNode)
+	{
+		dataFound = true;
+
+		//Only set prevAddress if we aren't looking at the head
+		if(head != currentNode)
+		{
+			prevAddress = currentNode;
+		}
+
+		foundAddress = currentNode;
+		return;
+	}
+	else if (currentNode->leftChild != NULL && currentNode->leftChild->data == dataOfNode)
 	{
 		dataFound = true;
 		prevAddress = currentNode;
@@ -345,12 +381,19 @@ void BinarySearchTree::findNodeR(Node * currentNode, const string & dataOfNode, 
 		return;
 	}
 	
+	//if list is empty or we left the tree (shouldnt happen)
 	if (head == NULL || currentNode == NULL)
 	{
 		return;
 	}
 
-	if (currentNode->leftChild != NULL && currentNode->leftChild->data == dataOfNode)
+	//See if we have found the data
+	if (currentNode->data == dataOfNode)
+	{
+		dataFound = true;
+		return;
+	}
+	else if (currentNode->leftChild != NULL && currentNode->leftChild->data == dataOfNode)
 	{
 		dataFound = true;
 		return;
@@ -371,4 +414,9 @@ void BinarySearchTree::findNodeR(Node * currentNode, const string & dataOfNode, 
 	{
 		return;
 	}
+}
+
+void BinarySearchTree::insertCopy(string dataToInsert, BinarySearchTree * newTreePointer)
+{
+	newTreePointer->insert(dataToInsert);
 }

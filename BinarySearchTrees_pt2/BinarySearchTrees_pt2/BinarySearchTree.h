@@ -39,6 +39,8 @@ public:
 
 	bool deleteNode(const string dataToDelete);
 
+	BinarySearchTree* deepCopy(const function<void(string, BinarySearchTree*)>& funcToCall);
+
 
 private:
 	struct Node
@@ -60,7 +62,11 @@ private:
 
 	void traversePreOrderR(Node* currentNode, const function<void(string, int)> &funcToCall, int height);
 
+	void traversePreOrderR(Node* currentNode, const function<void(string, BinarySearchTree*)>& funcToCall, BinarySearchTree* newTreePointer);
+
 	void findNodeR(Node* currentNode, const string &dataOfNode, Node* &foundAddress, Node* &prevAddress, bool& dataFound);
 
 	void findNodeR(Node* currentNode, const string &dataOfNode, bool& dataFound);
+
+	void insertCopy(string dataToInsert, BinarySearchTree * newTreePointer);
 };
