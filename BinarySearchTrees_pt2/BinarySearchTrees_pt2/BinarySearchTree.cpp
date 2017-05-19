@@ -18,7 +18,7 @@ BinarySearchTree::BinarySearchTree()
 
 BinarySearchTree::~BinarySearchTree()
 {
-
+	deleteAll();
 }
 
 bool BinarySearchTree::insert(string dataToInsert)
@@ -94,20 +94,41 @@ bool BinarySearchTree::insert(string dataToInsert)
 
 void BinarySearchTree::traverseInOrder(const function<void(string, int)> &funcToCall)
 {
-	traverseInOrderR(head, funcToCall, 0);
-	cout << endl;
+	if (head == NULL)
+	{
+		cout << "Tree is empty!" << endl;
+	}
+	else
+	{
+		traverseInOrderR(head, funcToCall, 0);
+		cout << endl;
+	}
 }
 
 void BinarySearchTree::traversePostOrder(const function<void(string, int)> &funcToCall)
 {
-	traversePostOrderR(head, funcToCall, 0);
-	cout << endl;
+	if (head == NULL)
+	{
+		cout << "Tree is empty!" << endl;
+	}
+	else
+	{
+		traversePostOrderR(head, funcToCall, 0);
+		cout << endl;
+	}
 }
 
 void BinarySearchTree::traversePreOrder(const function<void(string, int)> &funcToCall)
 {
-	traversePreOrderR(head, funcToCall, 0);
-	cout << endl;
+	if (head == NULL)
+	{
+		cout << "Tree is empty!" << endl;
+	}
+	else
+	{
+		traversePreOrderR(head, funcToCall, 0);
+		cout << endl;
+	}
 }
 
 bool BinarySearchTree::deleteNode(const string dataToDelete)
@@ -128,12 +149,6 @@ bool BinarySearchTree::deleteNode(const string dataToDelete)
 	//Find the node we want to delete, and get its address
 	findNodeR(head, dataToDelete, nodeToDelete, prevNode, dataFound);
 
-	//Debug only
-	//cout << "Node to delete: " << nodeToDelete->data << endl;
-	//cout << "Prev node: " << prevNode->data << endl;
-
-	//if(nodeToDelete->data)
-
 	//If leaf Node
 	if (nodeToDelete->leftChild == NULL && nodeToDelete->rightChild == NULL)
 	{
@@ -153,7 +168,7 @@ bool BinarySearchTree::deleteNode(const string dataToDelete)
 			itemsInTree--;
 
 			//set parent's pointer to null
-			prevNode->rightChild = NULL;
+			prevNode->leftChild = NULL;
 		}
 	}
 	//If node only has a left child
@@ -225,13 +240,37 @@ bool BinarySearchTree::deleteNode(const string dataToDelete)
 	return true;
 }
 
-BinarySearchTree * BinarySearchTree::deepCopy(const function<void(string, BinarySearchTree*)>& funcToCall)
+BinarySearchTree * BinarySearchTree::deepCopy()
 {
-	BinarySearchTree* copyOfTree = new BinarySearchTree;
-	
-	traversePreOrderR(head, insertCopy, copyOfTree);
+	if (head == NULL)
+	{
+		cout << "List is empty!" << endl;
+		return NULL;
+	}
+	else
+	{
+		BinarySearchTree* copyOfTree = new BinarySearchTree;
 
-	return copyOfTree;
+		traversePreOrderR(head, copyOfTree);
+
+		return copyOfTree;
+	}
+}
+
+void BinarySearchTree::deleteAll()
+{
+	if (head == NULL)
+	{
+		cout << "Tree already empty!" << endl;
+		return;
+	}
+	else 
+	{
+		deleteAllR(head);
+
+		head = NULL;
+		itemsInTree = 0;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -308,13 +347,13 @@ void BinarySearchTree::traversePreOrderR(Node* currentNode, const function<void(
 	}
 }
 
-void BinarySearchTree::traversePreOrderR(Node * currentNode, const function<void(string, BinarySearchTree*)>& funcToCall, BinarySearchTree * newTreePointer)
+void BinarySearchTree::traversePreOrderR(Node * currentNode, BinarySearchTree * newTreePointer)
 {
 	if (currentNode != NULL)
 	{
-		funcToCall(currentNode->data, newTreePointer);
-		traversePreOrderR(currentNode->leftChild, funcToCall, newTreePointer);
-		traversePreOrderR(currentNode->rightChild, funcToCall, newTreePointer);
+		insertCopy(currentNode->data, newTreePointer);
+		traversePreOrderR(currentNode->leftChild, newTreePointer);
+		traversePreOrderR(currentNode->rightChild, newTreePointer);
 	}
 }
 
@@ -419,4 +458,14 @@ void BinarySearchTree::findNodeR(Node * currentNode, const string & dataOfNode, 
 void BinarySearchTree::insertCopy(string dataToInsert, BinarySearchTree * newTreePointer)
 {
 	newTreePointer->insert(dataToInsert);
+}
+
+void BinarySearchTree::deleteAllR(Node * currentNode)
+{
+	if (currentNode != NULL)
+	{
+		deleteAllR(currentNode->leftChild);
+		deleteAllR(currentNode->rightChild);
+		delete currentNode;
+	}
 }

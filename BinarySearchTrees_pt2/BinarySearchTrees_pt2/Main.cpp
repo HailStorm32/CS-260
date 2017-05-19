@@ -17,20 +17,10 @@ void main()
 	cout << "Author: Demetri Van Sickle\n\n" << endl;
 
 	BinarySearchTree tree1;
+	BinarySearchTree* tree2;
 
-	
-	tree1.insert("T");
-	tree1.insert("A");
-	tree1.insert("F");
-	tree1.insert("Y");
-	tree1.insert("R");
-	tree1.insert("C");
-	tree1.insert("J");
-	tree1.insert("S");
-	tree1.insert("K");
-	tree1.insert("E");
 
-	/*tree1.insert("Jynx");
+	tree1.insert("Jynx");
 	tree1.insert("Charmander");
 	tree1.insert("Snorlax");
 	tree1.insert("Diglett");
@@ -41,21 +31,45 @@ void main()
 	tree1.insert("Squirtle");
 	tree1.insert("Ivysaur");
 	tree1.insert("Bulbasaur");
-	tree1.insert("Abra");*/
+	tree1.insert("Abra");
 
-	cout << "\nPreOrder:" << endl;
-	tree1.traversePreOrder(printNode);
-
-	cout << "\nInOrder:" << endl;
+	cout << "\nPrinting tree in alphabetical order:" << endl;
 	tree1.traverseInOrder(printNode);
+
+	cout << "\nMaking deep copy of tree.." << endl;
+	tree2 = tree1.deepCopy();
+
+	cout << "\nDeleting Squirtle and printing:" << endl;
+	tree1.deleteNode("Squirtle");
+	tree1.traverseInOrder(printNode);
+
+	cout << "\nDeleting Meowth and printing:" << endl;
+	tree1.deleteNode("Meowth");
+	tree1.traverseInOrder(printNode);
+
+	cout << "\nDeleting Blastoise and printing:" << endl;
+	tree1.deleteNode("Blastoise");
+	tree1.traverseInOrder(printNode);
+
+	cout << "\nDeleting Jynx and printing:" << endl;
+	tree1.deleteNode("Jynx");
+	tree1.traverseInOrder(printNode);
+
+	cout << "\nPrinting copy of tree inOrder:" << endl;
+	tree2->traverseInOrder(printNode);
 
 	cout << "\nPostOrder:" << endl;
-	tree1.traversePostOrder(printNode);
+	tree2->traversePostOrder(printNode);
 
-	tree1.deleteNode("T");
-	tree1.deleteNode("C");
+	cout << "\nand PreOrder:" << endl;
+	tree2->traversePreOrder(printNode);
 
-	tree1.traverseInOrder(printNode);
+	cout << "\nDeleting the copy tree..." << endl;
+	tree2->deleteAll();
+
+	cout << "\nPrinting the copy tree:" << endl;
+	tree2->traverseInOrder(printNode);
+
 
 	//Allow console to stay open
 	cin.get();
