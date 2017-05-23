@@ -59,22 +59,9 @@ void main()
 			wordFromLineStr = wordFromLine;
 
 			//Set all chars in the word to lowercase
-			/*wordFromLineStr = convertToLower(wordFromLineStr);
+			wordFromLineStr = convertToLower(wordFromLineStr);
 
 			//Calculate the indx
-			hash = hasher(wordFromLineStr);
-
-			hash = abs(hash);
-
-			if (hash > NUM_OF_UNIQUE_WORDS)
-			{
-				arrayIndx = abs(hasher(wordFromLineStr) % NUM_OF_UNIQUE_WORDS);
-			}
-			else
-			{
-				arrayIndx = hash;
-			}*/
-
 			arrayIndx = hasher(wordFromLineStr) % NUM_OF_UNIQUE_WORDS;
 			arrayIndx = abs(arrayIndx);
 
@@ -116,7 +103,8 @@ int hasher(string wordToHash)
 		*(hash * (wordToHash[wordToHash.length() / 2])) + (hash * (wordToHash[wordToHash.length() / 5])) * (hash * (wordToHash[wordToHash.length() / 6]))
 		* (hash * (wordToHash[wordToHash.length() / 3])) * (hash * (wordToHash[wordToHash.length() / 4])) * (hash * (wordToHash[wordToHash.length() / 7]))
 		* (wordToHash[wordToHash.length() / 3]) + (wordToHash[wordToHash.length() / 3]) + (wordToHash[wordToHash.length() / 2]) + (hash * (wordToHash[wordToHash.length() / 9] + hash))
-		+ (hash * (wordToHash[wordToHash.length() / 2])) * (hash * (wordToHash[wordToHash.length() / 9])) + (4 * (wordToHash[wordToHash.length() / 7])) * ((wordToHash[wordToHash.length() / 2]));
+		+ (hash * (wordToHash[wordToHash.length() / 5])) + (hash * (wordToHash[wordToHash.length() / 9])) + (4 * (wordToHash[wordToHash.length() / 7])) + ((wordToHash[wordToHash.length() / 2]))
+		* ((wordToHash[wordToHash.length() / 5])) + ((wordToHash[wordToHash.length() / 50]));
 	
 	return abs(hash);
 }
