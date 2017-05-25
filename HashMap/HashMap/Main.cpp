@@ -34,9 +34,6 @@ void main()
 	//Variables
 	int hashMap[NUM_OF_UNIQUE_WORDS] = {};
 	int arrayIndx = 0;
-	double hash = 0;
-	int error = 0;
-	int errorStr = 0;
 	char wordFromLine[DATA_SIZE] = {};
 	string wordFromLineStr = "";
 
@@ -68,8 +65,6 @@ void main()
 			if (arrayIndx < 0 || arrayIndx >= NUM_OF_UNIQUE_WORDS)
 			{
 				cout << "ERROR! index out of bounds" << endl;
-				error++;
-				errorStr = arrayIndx;
 				continue;
 			}
 
@@ -80,7 +75,7 @@ void main()
 
 		outputToFile(hashMap);
 
-		cout << "CS-260: A6 hashing, Demetri Van Sickle, " << findCollisions(hashMap) << "%" << "  error " << error << " " << errorStr << endl;
+		cout << "CS-260: A6 hashing, Demetri Van Sickle, " << findCollisions(hashMap) << "%" << endl;
 	}
 
 	//Allow console to stay open
