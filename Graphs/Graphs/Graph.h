@@ -8,6 +8,7 @@ Program: Graph.h
 
 #include<iostream>
 #include <list>
+#include <queue>
 
 using namespace std;
 
@@ -15,14 +16,20 @@ using namespace std;
 class Graph
 {
 public:
-	Graph(int V);  // Constructor
-	void addEdge(int v, int w); // function to add an edge to graph
-	void BFS(int s);  // prints BFS traversal from a given source s
-	void DFS(int v);    // DFS traversal of the vertices reachable from v
+	Graph(int numOfVertices);  // Constructor
+	
+	~Graph();
+
+	void addEdge(int currentVertice, int adjacentVertice); // function to add an edge to graph
+
+	void BFS(int startVertice);  // prints BFS traversal from a given source startVertice
+
+	void DFS(int startVertice);    // DFS traversal of the vertices reachable from startVertice
+
 	
 private:
-	int V;    // No. of vertices
+	int numOfVertices;  
 	list<int> *adj;    // Pointer to an array containing adjacency lists
 
-	void DFSUtil(int v, bool visited[]);  // A function used by DFS
+	void DFSUtil(int currentVertice, bool visited[]);  // A function used by DFS
 };
