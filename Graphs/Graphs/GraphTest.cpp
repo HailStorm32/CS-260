@@ -25,4 +25,8 @@ void main()
 	cout << "Following is Depth First Traversal (starting from vertex 2) \n";
 	g.DFS(2);
 	cout << "\n\n";
+
+	//Allow console to stay open
+	cin.get();
+	cin.ignore();
 }
