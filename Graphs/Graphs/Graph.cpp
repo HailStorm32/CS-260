@@ -10,17 +10,30 @@ Program: Graph.cpp
 Graph::Graph(int numOfVertices)
 {
 	this->numOfVertices = numOfVertices;
-	adj = new list<int>[numOfVertices];
+
+	adjMatrix = new int*[numOfVertices];
+
+	for (int i = 0; i < numOfVertices; i++)
+	{
+		adjMatrix[i] = new int[numOfVertices];
+		for (int j = 0; j < numOfVertices; j++)
+		{
+			adjMatrix[i][j] = 0;
+		}
+	}
 }
 
 Graph::~Graph()
 {
-	delete[] adj;
+	delete[] adjMatrix;
 }
 
 void Graph::addEdge(int currentVertice, int adjacentVertice)
 {
-	adj[currentVertice].push_back(adjacentVertice); // Add adjacentVertice to currentVertice’s list.
+	const int FROM = currentVertice; //row
+	const int TO = adjacentVertice; //col
+
+	adjMatrix[FROM][TO] = 1; // Add adjacentVertice to currentVertice’s list.
 }
 
 void Graph::BFS(int startVertice)
@@ -42,8 +55,6 @@ void Graph::BFS(int startVertice)
 	visited[currentVertice] = true;
 	queue.push(currentVertice);
 
-	// 'verticeIterator' will be used to get all adjacent vertices of a vertex
-	list<int>::iterator verticeIterator;
 
 	while (!queue.empty())
 	{
@@ -52,16 +63,21 @@ void Graph::BFS(int startVertice)
 		cout << currentVertice << " ";
 		queue.pop();
 
-		// Get all adjacent vertices of the dequeued vertex s
+		// Get all adjacent vertices of the dequeued vertex currentVertice
 		// If a adjacent has not been visited, then mark it visited
 		// and enqueue it
-		for (verticeIterator = adj[currentVertice].begin(); verticeIterator != adj[currentVertice].end(); ++verticeIterator)
+		for (int indx = 0; indx < numOfVertices; ++indx)
 		{
-			if (!visited[*verticeIterator])
+			if(adjMatrix[currentVertice][indx] == 0)
 			{
-				visited[*verticeIterator] = true;
-				queue.push(*verticeIterator);
+				continue;
 			}
+			else if (!visited[indx])
+			{
+				visited[indx] = true;
+				queue.push(indx);
+			}
+
 		}
 	}
 
@@ -95,14 +111,15 @@ void Graph::DFSUtil(int currentVertice, bool visited[])
 	visited[currentVertice] = true;
 	cout << currentVertice << " ";
 
-	// Recur for all the vertices adjacent to this vertex
-	list<int>::iterator verticeIterator;
-
-	for (verticeIterator = adj[currentVertice].begin(); verticeIterator != adj[currentVertice].end(); ++verticeIterator)
+	for (int indx = 0; indx < numOfVertices; ++indx)
 	{
-		if (!visited[*verticeIterator])
+		if (adjMatrix[currentVertice][indx] == 0)
 		{
-			DFSUtil(*verticeIterator, visited);
+			continue;
+		}
+		else if (!visited[indx])
+		{
+			DFSUtil(indx, visited);
 		}
 	}
 }

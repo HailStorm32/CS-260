@@ -29,7 +29,7 @@ public:
 	
 private:
 	int numOfVertices;  
-	list<int> *adj;    // Pointer to an array containing adjacency lists
+	int **adjMatrix;    // Pointer to an array containing adjacency lists
 
 	void DFSUtil(int currentVertice, bool visited[]);  // A function used by DFS
 };
