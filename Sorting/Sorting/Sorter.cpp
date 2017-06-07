@@ -18,10 +18,34 @@ Sorter::Sorter()
 	setupDataArrays(dSet100K->normal, dSet100K->reverse, dSet100K->random, dSet100K->ARRAY_SIZE);
 	setupDataArrays(dSet1M->normal, dSet1M->reverse, dSet1M->random, dSet1M->ARRAY_SIZE);
 
+	dSet100->timeToSortNorm = 0;
+	dSet100->timeToSortRev = 0;
+	dSet100->timeToSortRand = 0;
+
+	dSet1K->timeToSortNorm = 0;
+	dSet1K->timeToSortRev = 0;
+	dSet1K->timeToSortRand = 0;
+
+	dSet10K->timeToSortNorm = 0;
+	dSet10K->timeToSortRev = 0;
+	dSet10K->timeToSortRand = 0;
+
+	dSet100K->timeToSortNorm = 0;
+	dSet100K->timeToSortRev = 0;
+	dSet100K->timeToSortRand = 0;
+
+	dSet1M->timeToSortNorm = 0;
+	dSet1M->timeToSortRev = 0;
+	dSet1M->timeToSortRand = 0;
+
 	cout << "Setup Done." << endl;
 }
 
 Sorter::~Sorter()
+{
+}
+
+void Sorter::startSortingAll()
 {
 }
 
@@ -59,19 +83,31 @@ void Sorter::setupDataArrays(int normal[], int reverse[], int random[], const in
 	{
 		random[indx] = rand() % ARRAY_SIZE;
 	}
-
-	/*while (numOfSlotsFilled != ARRAY_SIZE - 1)
-	{
-		indxToFill = rand() % ARRAY_SIZE;//Get the the array indx to fill
-
-		//Only fill the indx if there already isnt data in it
-		if (random[indxToFill] == -1)
-		{
-			random[indxToFill] = numOfSlotsFilled;
-
-			numOfSlotsFilled++;
-		}
-		cout << numOfSlotsFilled << endl;
-	}*/
 	cout << " ...Done." << endl;
+}
+
+void Sorter::bubbleSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE)
+{
+	bool sorted = false;
+	
+	while (sorted == false)
+	{
+		sorted == true;
+
+		for (int indx = 0; indx < ARRAY_SIZE-1; indx++)
+		{
+			if (normal[indx] < normal[indx + 1])
+			{
+
+			}
+		}
+	}
+}
+
+void Sorter::mergeSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE)
+{
+}
+
+void Sorter::quickSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE)
+{
 }

@@ -11,9 +11,6 @@ void main()
 {
 	
 	Sorter sorter1;
+	
 
-	while (true)
-	{
-
-	}
 }

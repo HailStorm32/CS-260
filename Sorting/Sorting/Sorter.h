@@ -8,6 +8,7 @@ Program: Sorter.h
 
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -18,14 +19,20 @@ public:
 
 	~Sorter();
 
+	void startSortingAll();
+
 private:
 	struct DataSet100
 	{
 		const int ARRAY_SIZE = 100;
 
-		 int normal[100]; 
-		 int reverse[100];
-		 int random[100]; 
+		int normal[100];
+		int reverse[100];
+		int random[100];
+
+		float timeToSortNorm;
+		float timeToSortRev;
+		float timeToSortRand;
 	};
 
 	struct DataSet1K
@@ -33,17 +40,25 @@ private:
 		const int ARRAY_SIZE = 1000;
 
 		int normal[1000];
-		int reverse[1000]; 
-		int random[1000]; 
+		int reverse[1000];
+		int random[1000];
+
+		float timeToSortNorm;
+		float timeToSortRev;
+		float timeToSortRand;
 	};
 
 	struct DataSet10K
 	{
 		const int ARRAY_SIZE = 10000;
 
-		int normal[10000]; 
-		int reverse[10000]; 
-		int random[10000]; 
+		int normal[10000];
+		int reverse[10000];
+		int random[10000];
+
+		float timeToSortNorm;
+		float timeToSortRev;
+		float timeToSortRand;
 	};
 
 	struct DataSet100K
@@ -51,17 +66,25 @@ private:
 		const int ARRAY_SIZE = 100000;
 
 		int normal[100000];
-		int reverse[100000]; 
-		int random[100000]; 
+		int reverse[100000];
+		int random[100000];
+
+		float timeToSortNorm;
+		float timeToSortRev;
+		float timeToSortRand;
 	};
 
 	struct DataSet1M
 	{
 		const int ARRAY_SIZE = 1000000;
 
-		int normal[1000000]; 
-		int reverse[1000000]; 
-		int random[1000000]; 
+		int normal[1000000];
+		int reverse[1000000];
+		int random[1000000];
+
+		float timeToSortNorm;
+		float timeToSortRev;
+		float timeToSortRand;
 	};
 
 	//Declare the data sets on the heap
@@ -71,5 +94,11 @@ private:
 	DataSet100K* dSet100K = new DataSet100K;
 	DataSet1M* dSet1M = new DataSet1M;
 
-	void setupDataArrays(int normal[], int reverse[], int  random[], const int ARRAY_SIZE);
+	void setupDataArrays(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
+
+	void bubbleSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
+
+	void mergeSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
+
+	void quickSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
 };
