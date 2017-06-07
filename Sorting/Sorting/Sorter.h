@@ -30,9 +30,17 @@ private:
 		int reverse[100];
 		int random[100];
 
-		float timeToSortNorm;
-		float timeToSortRev;
-		float timeToSortRand;
+		float timeToSortNormBubble = 0;
+		float timeToSortNormSelection = 0;
+		float timeToSortNormQuick = 0;
+
+		float timeToSortRevBubble=0;
+		float timeToSortRevSelection =0;
+		float timeToSortRevQuick=0;
+
+		float timeToSortRandBubble=0;
+		float timeToSortRandSelection =0;
+		float timeToSortRandQuick=0;
 	};
 
 	struct DataSet1K
@@ -43,9 +51,17 @@ private:
 		int reverse[1000];
 		int random[1000];
 
-		float timeToSortNorm;
-		float timeToSortRev;
-		float timeToSortRand;
+		float timeToSortNormBubble = 0;
+		float timeToSortNormSelection = 0;
+		float timeToSortNormQuick = 0;
+
+		float timeToSortRevBubble = 0;
+		float timeToSortRevSelection = 0;
+		float timeToSortRevQuick = 0;
+
+		float timeToSortRandBubble = 0;
+		float timeToSortRandSelection = 0;
+		float timeToSortRandQuick = 0;
 	};
 
 	struct DataSet10K
@@ -56,9 +72,17 @@ private:
 		int reverse[10000];
 		int random[10000];
 
-		float timeToSortNorm;
-		float timeToSortRev;
-		float timeToSortRand;
+		float timeToSortNormBubble = 0;
+		float timeToSortNormSelection = 0;
+		float timeToSortNormQuick = 0;
+
+		float timeToSortRevBubble = 0;
+		float timeToSortRevSelection = 0;
+		float timeToSortRevQuick = 0;
+
+		float timeToSortRandBubble = 0;
+		float timeToSortRandSelection = 0;
+		float timeToSortRandQuick = 0;
 	};
 
 	struct DataSet100K
@@ -69,9 +93,17 @@ private:
 		int reverse[100000];
 		int random[100000];
 
-		float timeToSortNorm;
-		float timeToSortRev;
-		float timeToSortRand;
+		float timeToSortNormBubble = 0;
+		float timeToSortNormSelection = 0;
+		float timeToSortNormQuick = 0;
+
+		float timeToSortRevBubble = 0;
+		float timeToSortRevSelection = 0;
+		float timeToSortRevQuick = 0;
+
+		float timeToSortRandBubble = 0;
+		float timeToSortRandSelection = 0;
+		float timeToSortRandQuick = 0;
 	};
 
 	struct DataSet1M
@@ -82,9 +114,17 @@ private:
 		int reverse[1000000];
 		int random[1000000];
 
-		float timeToSortNorm;
-		float timeToSortRev;
-		float timeToSortRand;
+		float timeToSortNormBubble = 0;
+		float timeToSortNormSelection = 0;
+		float timeToSortNormQuick = 0;
+
+		float timeToSortRevBubble = 0;
+		float timeToSortRevSelection = 0;
+		float timeToSortRevQuick = 0;
+
+		float timeToSortRandBubble = 0;
+		float timeToSortRandSelection = 0;
+		float timeToSortRandQuick = 0;
 	};
 
 	//Declare the data sets on the heap
@@ -94,11 +134,19 @@ private:
 	DataSet100K* dSet100K = new DataSet100K;
 	DataSet1M* dSet1M = new DataSet1M;
 
+	clock_t clock1;
+
 	void setupDataArrays(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
 
 	void bubbleSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
 
-	void mergeSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
+	void bubbleSortR(int array[], const int ARRAY_SIZE);
+
+	void selectionSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
+
+	void selectionSortR(int array[], const int ARRAY_SIZE);
 
 	void quickSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
+
+	void swap(int array[], int indx1, int indx2);
 };

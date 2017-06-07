@@ -12,5 +12,9 @@ void main()
 	
 	Sorter sorter1;
 	
+	sorter1.startSortingAll();
 
+	//Allow console to stay open
+	cin.get();
+	cin.ignore();
 }
