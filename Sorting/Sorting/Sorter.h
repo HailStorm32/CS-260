@@ -9,6 +9,7 @@ Program: Sorter.h
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 
 using namespace std;
 
@@ -137,6 +138,8 @@ private:
 	DataSet1M* dSet1M = new DataSet1M;
 
 	clock_t clock1;
+
+	
 
 	void setupDataArrays(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
 
