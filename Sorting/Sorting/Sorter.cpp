@@ -133,8 +133,48 @@ void Sorter::startSortingAll()
 
 }
 
-void Sorter::printToFile(const string fileName)
+void Sorter::printToFile(const string FILE_NAME)
 {
+	fileWrite.open(FILE_NAME);
+
+	if (!fileWrite.is_open())
+	{
+		cout << "\n\n ERROR! Cant open file! " << FILE_NAME << endl;
+	}
+
+	cout << "\nWriting to file...";
+
+	fileWrite << "Bubble Sort, 100, 1000, 10000, 100000, 1000000" << endl;
+	fileWrite << "In Order, " << dSet100->timeToSortNormBubble << ", " << dSet1K->timeToSortNormBubble << ", " << dSet10K->timeToSortNormBubble << ", " 
+		<< dSet100K->timeToSortNormBubble << ", " << dSet1M->timeToSortNormBubble << endl;
+	fileWrite << "Reverse Order, " << dSet100->timeToSortRevBubble << ", " << dSet1K->timeToSortRevBubble << ", " << dSet10K->timeToSortRevBubble << ", "
+		<< dSet100K->timeToSortRevBubble << ", " << dSet1M->timeToSortRevBubble << endl;
+	fileWrite << "Random, " << dSet100->timeToSortRandBubble << ", " << dSet1K->timeToSortRandBubble << ", " << dSet10K->timeToSortRandBubble << ", "
+		<< dSet100K->timeToSortRandBubble << ", " << dSet1M->timeToSortRandBubble << endl;
+
+	fileWrite << ", , , , ,\n, , , , ," << endl;
+
+	fileWrite << "Selection Sort, 100, 1000, 10000, 100000, 1000000" << endl;
+	fileWrite << "In Order, " << dSet100->timeToSortNormSelection << ", " << dSet1K->timeToSortNormSelection << ", " << dSet10K->timeToSortNormSelection << ", "
+		<< dSet100K->timeToSortNormSelection << ", " << dSet1M->timeToSortNormSelection << endl;
+	fileWrite << "Reverse Order, " << dSet100->timeToSortRevSelection << ", " << dSet1K->timeToSortRevSelection << ", " << dSet10K->timeToSortRevSelection << ", "
+		<< dSet100K->timeToSortRevSelection << ", " << dSet1M->timeToSortRevSelection << endl;
+	fileWrite << "Random, " << dSet100->timeToSortRandSelection << ", " << dSet1K->timeToSortRandSelection << ", " << dSet10K->timeToSortRandSelection << ", "
+		<< dSet100K->timeToSortRandSelection << ", " << dSet1M->timeToSortRandSelection << endl;
+
+	fileWrite << ", , , , ,\n, , , , ," << endl;
+
+	fileWrite << "Quick Sort, 100, 1000, 10000, 100000, 1000000" << endl;
+	fileWrite << "In Order, " << dSet100->timeToSortNormQuick << ", " << dSet1K->timeToSortNormQuick << ", " << dSet10K->timeToSortNormQuick << ", "
+		<< dSet100K->timeToSortNormQuick << ", " << dSet1M->timeToSortNormQuick << endl;
+	fileWrite << "Reverse Order, " << dSet100->timeToSortRevQuick << ", " << dSet1K->timeToSortRevQuick << ", " << dSet10K->timeToSortRevQuick << ", "
+		<< dSet100K->timeToSortRevQuick << ", " << dSet1M->timeToSortRevQuick << endl;
+	fileWrite << "Random, " << dSet100->timeToSortRandQuick << ", " << dSet1K->timeToSortRandQuick << ", " << dSet10K->timeToSortRandQuick << ", "
+		<< dSet100K->timeToSortRandQuick << ", " << dSet1M->timeToSortRandQuick << endl;
+
+	fileWrite.close();
+
+	cout << "...Done." << endl;
 }
 
 void Sorter::setupDataArrays(int normal[], int reverse[], int random[], const int ARRAY_SIZE)

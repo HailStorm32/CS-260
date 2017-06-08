@@ -14,6 +14,8 @@ void main()
 	
 	sorter1.startSortingAll();
 
+	sorter1.printToFile("times.csv");
+
 	//Allow console to stay open
 	cin.get();
 	cin.ignore();

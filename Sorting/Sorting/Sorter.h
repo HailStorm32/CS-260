@@ -10,6 +10,7 @@ Program: Sorter.h
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ public:
 
 	void startSortingAll();
 
-	void printToFile(const string fileName);
+	void printToFile(const string FILE_NAME);
 
 private:
 	struct DataSet100
@@ -139,7 +140,7 @@ private:
 
 	clock_t clock1;
 
-	
+	ofstream fileWrite;
 
 	void setupDataArrays(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
 
