@@ -352,7 +352,7 @@ void Sorter::quickSort(int normal[], int reverse[], int random[], const int ARRA
 	cout << "\n";*/
 	cout << "normal..." << endl;
 	clock1 = clock();
-	quickSortR(normal, 0, ARRAY_SIZE - 1, ARRAY_SIZE);
+	quickSortR(normal, 0, ARRAY_SIZE - 1);
 	normalTime = static_cast<float>(clock() - clock1) / CLOCKS_PER_SEC;
 	/*cout << "\n";
 	for (int indx2 = 0; indx2 < ARRAY_SIZE; indx2++)
@@ -369,7 +369,7 @@ void Sorter::quickSort(int normal[], int reverse[], int random[], const int ARRA
 	cout << "\n";*/
 	cout << "reverse..." << endl;
 	clock1 = clock();
-	quickSortR(reverse, 0, ARRAY_SIZE - 1, ARRAY_SIZE);
+	quickSortR(reverse, 0, ARRAY_SIZE - 1);
 	reverseTime = static_cast<float>(clock() - clock1) / CLOCKS_PER_SEC;
 	/*cout << "\n";
 	for (int indx2 = 0; indx2 < ARRAY_SIZE; indx2++)
@@ -386,7 +386,7 @@ void Sorter::quickSort(int normal[], int reverse[], int random[], const int ARRA
 	cout << "\n";*/
 	cout << "random..." << endl;
 	clock1 = clock();
-	quickSortR(random, 0, ARRAY_SIZE - 1, ARRAY_SIZE);
+	quickSortR(random, 0, ARRAY_SIZE - 1);
 	randomTime = static_cast<float>(clock() - clock1) / CLOCKS_PER_SEC;
 	/*cout << "\n";
 	for (int indx2 = 0; indx2 < ARRAY_SIZE; indx2++)
@@ -429,11 +429,11 @@ void Sorter::quickSort(int normal[], int reverse[], int random[], const int ARRA
 	}
 }
 
-void Sorter::quickSortR(int array[], int leftPointer, int rightPointer, const int ARRAY_SIZE)
+void Sorter::quickSortR(int array[], int leftPointer, int rightPointer)
 {
-	int pivot = array[ARRAY_SIZE / 2];
+	int pivot = array[(leftPointer + rightPointer) / 2];
 	int indx = 0;
-	
+
 	if (leftPointer >= rightPointer)
 	{
 		return;
@@ -441,14 +441,14 @@ void Sorter::quickSortR(int array[], int leftPointer, int rightPointer, const in
 
 	indx = split(array, leftPointer, rightPointer, pivot);
 
-	quickSortR(array, 0, indx, (0 - indx) + 1);
-	quickSortR(array, indx + 1, ((indx + 1) - (ARRAY_SIZE - 1)), ((indx + 1) - (ARRAY_SIZE - 1)) + 1);
+	quickSortR(array, leftPointer, indx - 1);
+	quickSortR(array, indx, rightPointer);
 }
 
 int Sorter::split(int array[], int leftPointer, int rightPointer, int pivot)
 {
 	//While the pointers havn't passed each other
-	while (leftPointer < rightPointer)
+	while (leftPointer <= rightPointer)
 	{
 		//Continue to increment the left pointer until we hit a value greater than the pivot
 		while (array[leftPointer] < pivot && leftPointer < rightPointer)
@@ -464,8 +464,10 @@ int Sorter::split(int array[], int leftPointer, int rightPointer, int pivot)
 
 		//Swap the two values, and move the pointers
 		swap(array, leftPointer, rightPointer);
+		leftPointer++;
+		rightPointer--;
 	}
-	return leftPointer -1;
+	return leftPointer;
 }
 
 void Sorter::swap(int array[], int indx1, int indx2)

@@ -150,7 +150,7 @@ private:
 
 	void quickSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
 
-	void quickSortR(int array[], int leftPointer, int rightPointer, const int ARRAY_SIZE);
+	void quickSortR(int array[], int leftPointer, int rightPointer); //const int ARRAY_SIZE
 
 	int split(int array[], int leftPointer, int rightPointer, int pivot);
 
