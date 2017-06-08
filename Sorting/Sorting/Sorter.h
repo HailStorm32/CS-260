@@ -21,6 +21,8 @@ public:
 
 	void startSortingAll();
 
+	void printToFile(const string fileName);
+
 private:
 	struct DataSet100
 	{
@@ -148,5 +150,11 @@ private:
 
 	void quickSort(int normal[], int reverse[], int random[], const int ARRAY_SIZE);
 
+	void quickSortR(int array[], int leftPointer, int rightPointer, const int ARRAY_SIZE);
+
+	int split(int array[], int leftPointer, int rightPointer, int pivot);
+
 	void swap(int array[], int indx1, int indx2);
+
+
 };
